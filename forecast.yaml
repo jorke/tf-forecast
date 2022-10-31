@@ -1,0 +1,47 @@
+Parameters:
+  DataSetGroup:
+    Description: "grouping of datasets for forecast"
+    Type: String
+  
+Resources:
+  ForecastDataSetGroup:
+    Type: AWS::Forecast::DatasetGroup
+    Properties: 
+      DatasetArns: 
+        - !GetAtt ForeCastDataSet1.Arn
+      DatasetGroupName: !Ref DataSetGroup
+      Domain: "CUSTOM"
+      # Tags: 
+      #   - Tag
+
+  ForeCastDataSet1:
+    Type: AWS::Forecast::Dataset
+    Properties: 
+      DataFrequency: "D"
+      DatasetName: "MyDataSet1"
+      # ALL_DATASET_TYPES | ITEM_METADATA | RELATED_TIME_SERIES | TARGET_TIME_SERIES
+      DatasetType: "TARGET_TIME_SERIES"
+      Domain: "CUSTOM"
+      # EncryptionConfig: Json
+      Schema: 
+        {
+          "Attributes": [
+            {
+              "AttributeName": "item_id",
+              "AttributeType": "string"
+            },
+            {
+              "AttributeName": "timestamp",
+              "AttributeType": "timestamp"
+            },
+            {
+              "AttributeName": "target_value",
+              "AttributeType": "float"
+            }
+          ]
+        }
+      # Tags: 
+      #   - Json
+
+
+
