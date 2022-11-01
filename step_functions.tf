@@ -16,11 +16,11 @@ resource "aws_sfn_state_machine" "steps" {
 }
 EOF
 
-  logging_configuration {
-    log_destination        = "${aws_cloudwatch_log_group.steps.arn}:*"
-    include_execution_data = true
-    level                  = "ERROR"
-  }
+#   logging_configuration {
+#     log_destination        = "${aws_cloudwatch_log_group.steps.arn}:*"
+#     include_execution_data = true
+#     level                  = "ERROR"
+#   }
   tags = var.tags
 }
 
@@ -83,18 +83,15 @@ resource "aws_iam_role" "steps" {
         {
             "Effect": "Allow",
             "Action": [
-                "logs:CreateLogGroup", 
-                "logs:CreateLogStream", 
-                "logs:PutLogEvents", 
-                "logs:AssociateKmsKey", 
-                "logs:CreateLogDelivery", 
-                "logs:GetLogDelivery", 
-                "logs:UpdateLogDelivery", 
-                "logs:DeleteLogDelivery", 
-                "logs:ListLogDeliveries", 
-                "logs:PutResourcePolicy", 
-                "logs:DescribeResourcePolicies", 
-                "logs:DescribeLogGroups" 
+                "logs:CreateLogDelivery",
+                "logs:GetLogDelivery",
+                "logs:UpdateLogDelivery",
+                "logs:DeleteLogDelivery",
+                "logs:ListLogDeliveries",
+                "logs:PutLogEvents",
+                "logs:PutResourcePolicy",
+                "logs:DescribeResourcePolicies",
+                "logs:DescribeLogGroups"
             ],
             "Resource": "${aws_cloudwatch_log_group.steps.arn}:*"
         }

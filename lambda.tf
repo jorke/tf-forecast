@@ -4,6 +4,16 @@ data "archive_file" "rand" {
   source_file = "lambda/index.js"
 }
 
+
+resource "aws_s3_bucket_object" "rand" {
+  bucket = aws_s3_bucket.this.id
+  key    = "code/rand-${filemd5(data.archive_file.rand.source_file)}"
+  source = data.archive_file.rand.source_file
+  
+  etag = filemd5(data.archive_file.rand.source_file)
+}
+
+
 resource "aws_lambda_function" "rand" {
   filename         = "lambda/archive.zip"
   function_name    = "random_${random_pet.this.id}"
