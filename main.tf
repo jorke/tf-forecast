@@ -4,12 +4,12 @@ provider "aws" {
 }
 
 provider "aws" {
-  alias = "sydney"
+  alias  = "sydney"
   region = "ap-southeast-2"
 }
 
 provider "aws" {
-  alias = "useast"
+  alias  = "useast"
   region = "us-east-1"
 }
 
@@ -21,11 +21,11 @@ output "account_id" {
 }
 
 variable "aws_region" {
-  default = "ap-southeast-2" 
+  default = "ap-southeast-2"
 }
 
 variable "tags" {
-    default = {}
+  default = {}
 }
 
 variable "name" {
@@ -40,23 +40,23 @@ resource "random_pet" "this" {
 
 
 resource "aws_s3_bucket" "this" {
-  bucket = "${var.name}-${random_pet.this.id}"
-  tags = var.tags
+  bucket        = "${var.name}-${random_pet.this.id}"
+  tags          = var.tags
   force_destroy = true
 }
 
 
 
-resource "aws_cloudformation_stack" "this" {
-  name = "${var.name}-${random_pet.this.id}"
+# resource "aws_cloudformation_stack" "this" {
+#   name = "${var.name}-${random_pet.this.id}"
 
-  parameters = {
-    DataSetGroup = "mygroup"
-  }
+#   parameters = {
+#     DataSetGroup = "mygroup"
+#   }
 
-  template_body = file("${path.module}/forecast.yaml")
-  on_failure = "DELETE"
-}
-  
+#   template_body = file("${path.module}/forecast.yaml")
+#   on_failure = "DELETE"
+# }
+
 
 
