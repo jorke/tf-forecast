@@ -16,11 +16,11 @@ resource "aws_sfn_state_machine" "steps" {
 }
 EOF
 
-#   logging_configuration {
-#     log_destination        = "${aws_cloudwatch_log_group.steps.arn}:*"
-#     include_execution_data = true
-#     level                  = "ERROR"
-#   }
+  #   logging_configuration {
+  #     log_destination        = "${aws_cloudwatch_log_group.steps.arn}:*"
+  #     include_execution_data = true
+  #     level                  = "ERROR"
+  #   }
   tags = var.tags
 }
 
@@ -74,26 +74,26 @@ resource "aws_iam_role" "steps" {
           ]
         },
         {
-            "Effect" : "Allow",
-            "Action" : [
-                "sns:Publish"
-            ],
-            "Resource" : aws_sns_topic.steps.arn
+          "Effect" : "Allow",
+          "Action" : [
+            "sns:Publish"
+          ],
+          "Resource" : aws_sns_topic.steps.arn
         },
         {
-            "Effect": "Allow",
-            "Action": [
-                "logs:CreateLogDelivery",
-                "logs:GetLogDelivery",
-                "logs:UpdateLogDelivery",
-                "logs:DeleteLogDelivery",
-                "logs:ListLogDeliveries",
-                "logs:PutLogEvents",
-                "logs:PutResourcePolicy",
-                "logs:DescribeResourcePolicies",
-                "logs:DescribeLogGroups"
-            ],
-            "Resource": "${aws_cloudwatch_log_group.steps.arn}:*"
+          "Effect" : "Allow",
+          "Action" : [
+            "logs:CreateLogDelivery",
+            "logs:GetLogDelivery",
+            "logs:UpdateLogDelivery",
+            "logs:DeleteLogDelivery",
+            "logs:ListLogDeliveries",
+            "logs:PutLogEvents",
+            "logs:PutResourcePolicy",
+            "logs:DescribeResourcePolicies",
+            "logs:DescribeLogGroups"
+          ],
+          "Resource" : "${aws_cloudwatch_log_group.steps.arn}:*"
         }
       ]
     })
