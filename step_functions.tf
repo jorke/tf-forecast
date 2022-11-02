@@ -73,6 +73,15 @@ resource "aws_iam_role" "steps" {
             "${aws_s3_bucket.this.arn}/*"
           ]
         },
+         {
+            "Effect": "Allow",
+            "Action": [
+                "lambda:InvokeFunction"
+            ],
+            "Resource": [
+                "${aws_lambda_function.rand.arn}"
+            ]
+        },
         {
           "Effect" : "Allow",
           "Action" : [
