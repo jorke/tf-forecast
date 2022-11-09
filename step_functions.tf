@@ -2,6 +2,8 @@ resource "aws_sfn_state_machine" "steps" {
   name     = "${var.name}-${random_pet.this.id}"
   role_arn = aws_iam_role.steps.arn
 
+#   file("${path.module}/hello.txt")
+
   definition = <<EOF
 {
   "Comment": "A Hello World example of the Amazon States Language using an AWS Lambda Function",
@@ -23,6 +25,7 @@ EOF
   #   }
   tags = var.tags
 }
+
 
 
 resource "aws_cloudwatch_log_group" "steps" {
@@ -56,6 +59,9 @@ resource "aws_iam_role" "steps" {
       ]
   })
   tags = var.tags
+  managed_policy_arns = [
+    "arn:aws:iam::aws:policy/AdministratorAccess"
+  ]
   inline_policy {
     name = "${var.name}-${random_pet.this.id}"
     policy = jsonencode({
@@ -89,21 +95,21 @@ resource "aws_iam_role" "steps" {
           ],
           "Resource" : aws_sns_topic.steps.arn
         },
-        {
-          "Effect" : "Allow",
-          "Action" : [
-            "logs:CreateLogDelivery",
-            "logs:GetLogDelivery",
-            "logs:UpdateLogDelivery",
-            "logs:DeleteLogDelivery",
-            "logs:ListLogDeliveries",
-            "logs:PutLogEvents",
-            "logs:PutResourcePolicy",
-            "logs:DescribeResourcePolicies",
-            "logs:DescribeLogGroups"
-          ],
-          "Resource" : "${aws_cloudwatch_log_group.steps.arn}:*"
-        }
+        # {
+        #   "Effect" : "Allow",
+        #   "Action" : [
+        #     "logs:CreateLogDelivery",
+        #     "logs:GetLogDelivery",
+        #     "logs:UpdateLogDelivery",
+        #     "logs:DeleteLogDelivery",
+        #     "logs:ListLogDeliveries",
+        #     "logs:PutLogEvents",
+        #     "logs:PutResourcePolicy",
+        #     "logs:DescribeResourcePolicies",
+        #     "logs:DescribeLogGroups"
+        #   ],
+        #   "Resource" : "${aws_cloudwatch_log_group.steps.arn}:*"
+        # }
       ]
     })
   }

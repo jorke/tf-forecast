@@ -1,0 +1,11 @@
+{
+    "Comment": "A Hello World example of the Amazon States Language using an AWS Lambda Function",
+    "StartAt": "HelloWorld",
+    "States": {
+      "HelloWorld": {
+        "Type": "Task",
+        "Resource": "arn:aws:lambda:ap-southeast-2:543672370483:function:thing",
+        "End": true
+      }
+    }
+  }

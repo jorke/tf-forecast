@@ -1,4 +1,3 @@
-
 provider "aws" {
   region = var.aws_region
 }
@@ -42,9 +41,19 @@ resource "random_pet" "this" {
 resource "aws_s3_bucket" "this" {
   bucket        = "${var.name}-${random_pet.this.id}"
   tags          = var.tags
-  force_destroy = true
+  # force_destroy = true
+  
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
+
+#   file("${path.module}/hello.txt")
+
+output "step_function_definition" {
+  value = file("${path.module}/step_function1.json").replace("543672370483", "muppet")
+}
 
 
 # resource "aws_cloudformation_stack" "this" {
